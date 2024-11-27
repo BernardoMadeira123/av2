@@ -54,8 +54,7 @@ return [
 
         'stack' => [
             'driver' => 'stack',
-            'channels' => explode(',', env('LOG_STACK', 'single')),
-            'ignore_exceptions' => false,
+            'channels' => ['daily'],  // Logs serão armazenados por dia
         ],
 
         'single' => [
@@ -68,9 +67,8 @@ return [
         'daily' => [
             'driver' => 'daily',
             'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'days' => env('LOG_DAILY_DAYS', 14),
-            'replace_placeholders' => true,
+            'level' => 'debug',
+            'days' => 30,  
         ],
 
         'slack' => [

@@ -36,12 +36,25 @@ class UserController extends Controller
     public function store(Request $request)
     {
         try {
-            $usuario = $this->userService->createUser($request->all());
+            $validatedData = $request->validate([
+                'email' => 'required|email|unique:users,email',
+                'senha' => 'required|min:8|confirmed',
+            ]);
+
+            // Se a validação passar, cria o usuário
+            $usuario = $this->userService->createUser($validatedData);
+
             return response()->json($usuario, 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'errors' => $e->validator->errors(),
+            ], 422);
         } catch (\Exception $e) {
+
             return response()->json(['error' => $e->getMessage()], 400);
         }
     }
+
 
     public function update(Request $request, $id)
     {

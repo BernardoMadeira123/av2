@@ -44,7 +44,7 @@ class UserService
     {
         $this->validateUserData($data);
 
-        $data['senha'] = Hash::make($data['senha']);
+        $data['senha'] = $this->customEncryption->encrypt($data['senha']);
         $user = User::create($data);
 
         $this->sendOtpMail($user->email);
