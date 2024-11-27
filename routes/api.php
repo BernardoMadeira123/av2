@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FuncionarioController;
+use App\Http\Controllers\PassageiroController;
 
 // USUÁRIO
 Route::prefix('users')->group(function () {
@@ -24,6 +26,24 @@ Route::prefix('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/validate-token', [AuthController::class, 'validateToken']);
+});
+
+// PASSAGEIRO
+Route::prefix('passageiro')->group(function () {
+    Route::get('/', [PassageiroController::class, 'index']);
+    Route::get('/{id}', [PassageiroController::class, 'show']);
+    Route::post('/', [PassageiroController::class, 'store']);
+    Route::put('/{id}', [PassageiroController::class, 'update']);
+    Route::delete('/{id}', [PassageiroController::class, 'destroy']);
+});
+
+// FUNCIONARIOS
+Route::prefix('funcionarios')->group(function () {
+    Route::get('/', [FuncionarioController::class, 'index']);
+    Route::get('/{id}', [FuncionarioController::class, 'show']);
+    Route::post('/', [FuncionarioController::class, 'store']);
+    Route::put('/{id}', [FuncionarioController::class, 'update']);
+    Route::delete('/{id}', [FuncionarioController::class, 'destroy']);
 });
 
 Route::get('/hello', function () {
